@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+{% load static %}
+<html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths"
+      lang="en" style="">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="CFSzipp Login Area" name="description">
+    <meta content="CFSZIPP" name="author">
+    <link href="{% static 'images/zipp_logo.png' %}" rel="shortcut icon" type="image/x-icon">
+
+
+    <title>CFSZIPP || Login Area</title>
+
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- vendor css -->
+    <link href="{% static 'vendor/bootstrap/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendor/bootstrap/css/ionicons.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- COLLETRA CSS -->
+    <link href="{% static 'vendor/bootstrap/css/colletra.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendor/bootstrap/css/colletra.auth.css' %}" rel="stylesheet" type="text/css">
+
+    <script src="{% static 'js/modernizr-2.8.3.js' %}"></script>
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<style>
+.sign-in{
+    text-align: center;
+    height: 120px;
+    width: 120px;
+    border-radius: 100%;
+    margin: auto;
+    border: 1px solid #dedede;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sign-in img {
+    width: 75px;
+}
+</style>
+</head>
+<body>
+
+<header class="navbar navbar-header navbar-header-fixed">
+    <!--        <a href="{% url 'login' %}" id="mainMenuOpen" class="burger-menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>-->
+    <div class="navbar-brand">
+        <a href="{% url 'login' %}"><img src="{% static 'images/zipp_logo.png' %}"></a>
+    </div><!-- navbar-brand -->
+    <div class="navbar-menu-wrapper" id="navbarMenu">
+        <div class="navbar-menu-header">
+            <a href="{% url 'login' %}"><img src="{% static 'images/zipp_logo.png' %}"></a>
+            <a href="{% url 'login' %}" id="mainMenuClose">
+                <svg class="feather feather-x" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                     stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <line x1="18" x2="6" y1="6" y2="18"></line>
+                    <line x1="6" x2="18" y1="6" y2="18"></line>
+                </svg>
+            </a>
+        </div><!-- navbar-menu-header -->
+
+    </div>
+    <div class="navbar-right">
+        <!--            <a href="https://www.colletra.net/en/account/registercorporate" class="btn btn-buy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg><span>REGISTER</span></a>-->
+    </div><!-- navbar-right -->
+</header><!-- navbar -->
+
+{% block container %}
+<div class="content content-fixed content-auth">
+    <div class="container">
+        <div class="media align-items-stretch justify-content-center ht-100p pos-relative">
+            <div class="media-body align-items-center d-none d-lg-flex">
+                <div class="mx-wd-600 animated fadein">
+                    <img alt="" class="img-fluid" src="{% static 'images/login-anim-ontop.gif' %}">
+                </div>
+                <div class="pos-absolute b-0 l-0 tx-12 tx-center">
+
+                </div>
+            </div><!-- main-body -->
+            <div class="sign-wrapper mg-lg-l-50 mg-xl-l-60">
+                <div class="wd-100p" style="width:75%;">
+<!--                    <h3 class="tx-color-01 mg-b-5">Sign In</h3>-->
+                    <div class="sign-in">
+                        <img src="{% static 'images/zipp_logo.png' %}">
+                    </div>
+                    <p class="tx-color-01 tx-16 mg-b-40" style="text-align: center;">Sign in to your account</p>
+
+                    <section id="loginForm">
+                {% for message in messages %}
+                    {% if message.level == 40 and "You are now multifactor-authenticated. Multifactor settings." not in message %}
+                        <h6 style="font-size: small; color: blue; text-align: center" >{{ message }}</h6>
+                    {% elif "You are now multifactor-authenticated. Multifactor settings." not in message %}
+                        <h6 class="text-danger" >{{ message }}</h6>
+                    {% endif %}
+                {% endfor %}
+
+                        <form action="{% url 'login' %}" class="form-horizontal" method="post" novalidate="novalidate"
+                              role="form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input class="form-control" data-val="true"
+                                       data-val-required="Field Username is required." id="UserName" name="username"
+                                       placeholder="username" type="text" value="">
+                            </div>
+
+                            <div class="form-group password-field">
+                                <div class="d-flex justify-content-between mg-b-5">
+                                    <label class="mg-b-0-f">Password</label>
+                                </div>
+
+                                <input class="form-control" data-val="true"
+                                       data-val-required="Field Password is required." id="Password" name="password"
+                                       placeholder="Enter your password" type="password">
+
+                                <div class="d-flex justify-content-between mg-b-5">
+                                    <label class="mg-b-0-f"></label>
+                                    <a class="tx-13" href="{% url 'forgot_password' %}">Forgot password?</a>
+                                    <div class="loader" id="loadForgotPwd" style="display:none;"><p>"Processing"</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="validation-summary-valid col-sm-offset-4" data-valmsg-summary="true">
+                                <ul>
+                                    <li style="display:none"></li>
+                                </ul>
+                            </div>
+
+                            <input class="btn btn-brand-02 btn-block" type="submit" value="Sign In">
+
+
+                        </form>
+                    </section>
+
+                    <!--                    <div class="divider-text">Or register</div>-->
+                    <!--                    <div class="tx-13 mg-t-20 tx-center">Don't have an account? <a href="https://www.colletra.net/en/account/registercorporate">Create an Account</a></div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="forgot-pwd-cnt">
+
+</div>
+
+{% endblock %}
+<footer class="footer">
+    <div>
+        <span>Copyright to © 2020 Document Upload</span>
+
+    </div>
+    <!--<div>
+        <nav class="nav">
+            <a class="nav-link" href="#">LEGAL</a>
+            <a class="nav-link" href="#">ABOUT</a>
+        </nav>
+    </div>-->
+</footer>
+
+
+<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+
+<script src="{% static 'js/jquery.validate.js' %}"></script>
+<script src="{% static 'js/jquery.validate.unobtrusive.js' %}"></script>
+
+
+<script src="{% static 'js/jquery.unobtrusive-ajax.js' %}"></script>
+
+
+<script src="{% static 'js/MvcFoolproofJQueryValidation.min.js' %}"></script>
+<script src="{% static 'js/mvcfoolproof.unobtrusive.min.js' %}"></script>
+
+
+<script src="{% static 'js/feather.min.js' %}"></script>
+<script src="{% static 'js/colletra.js' %}"></script>
+<!--
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+<script src="lib/js-cookie/js.cookie.js"></script>
+<script src="assets/js/colletra.settings.js"></script>
+-->
+
+
+<div class="backdrop"></div>
+</body>
+</html>

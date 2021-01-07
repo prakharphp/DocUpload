@@ -1,0 +1,92 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block container %}
+
+<div class="content ht-100v pd-0">
+
+    <div class="content-header">
+        <div class="content-search">
+        </div>
+        <nav class="nav">
+            <a href="#" class="nav-link">Need help <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line></svg></a>
+        </nav>
+    </div>
+
+    <div class="content-body">
+        <div class="container pd-x-0 tx-13">
+            <div class="media d-block d-lg-flex">
+
+                <div class="profile-sidebar profile-sidebar-two pd-lg-r-15">
+
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg">
+                            <div class="avatar avatar-xxl avatar-online"><img src="{% static 'images/default-avatar.png' %}" class="rounded-circle" alt=""></div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-8 col-md-7 col-lg mg-t-20 mg-sm-t-0 mg-lg-t-25">
+                        <h5 class="mg-b-2 tx-spacing--1">{{user}}</h5>
+                        <p class="tx-color-03 mg-b-25">{{user}}</p>
+                    </div>
+
+                </div>
+
+                <div class="media-body mg-t-40 mg-lg-t-0 pd-lg-x-10">
+
+                    <div class="card mg-b-20 mg-lg-b-25">
+
+                        <form action="#" class="form-horizontal form-horizontal-md" method="post" >
+                        {% csrf_token %}
+                        <div class="card-header pd-y-15 pd-x-20 d-flex align-items-center justify-content-between">
+                            <h6 class="tx-13 tx-spacing-1 tx-uppercase tx-semibold mg-b-0">Dashboard</h6>
+                            <nav class="nav nav-with-icon tx-13">
+                            {% for message in messages %}
+                                {% if message.level == 40 and "You are now multifactor-authenticated. Multifactor settings." not in message %}
+                                    <h6 style="font-size: small; color: blue; text-align: center" >{{ message }}</h6>
+                                {% elif message.level == 20 %}
+                                    <h6 class="text-success" >{{ message }}</h6>
+                                {% else %}
+                                    <h6 class="text-danger" >{{ message }}</h6>
+                                {% endif %}
+                            {% endfor %}
+                            </nav>
+                        </div>
+                        <div class="card-body pd-25">
+                            <div class="media d-block d-sm-flex">
+                                <div class="wd-80 ht-80 bg-ui-04 rounded d-flex align-items-center justify-content-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-briefcase tx-white-7 wd-40 ht-40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                        <path d="M 16 21 V 5 a 2 2 0 0 0 -2 -2 h -4 a 2 2 0 0 0 -2 2 v 16"></path>
+                                    </svg>
+                                </div>
+                                <div class="media-body pd-t-25 pd-sm-t-0 pd-sm-l-25">
+
+                                    <div class="flex-fill">
+
+                                        <h6 class="mg-b-10">Documents</h6>
+                                        {% for d in docs %}
+                                        <div class="form-group">
+                                            <h5 class="divider-text" style="font-size: 12px;">{{ d.name }}</h5>
+                                        </div>
+                                        <div class="form-group">
+                                            <a href="{{d.url}}" target="_blank">{{d.url}}</a><br>
+                                            <label><b>Uploaded on: </b>{{d.updated_on}}</label><br>
+                                            <label><b>Uploaded by: </b>{{d.owner.username}}</label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,129 @@
+{% load static %}
+<aside class="aside aside-fixed">
+    <div class="aside-header">
+        <a class="aside-logo" href="{% url 'Dashboard' %}"><img src="{% static 'images/zipp_logo.png' %}"></a>
+        <a class="aside-menu-link" href="{% url 'Dashboard' %}">
+            <svg class="feather feather-menu" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <line x1="3" x2="21" y1="12" y2="12"></line>
+                <line x1="3" x2="21" y1="6" y2="6"></line>
+                <line x1="3" x2="21" y1="18" y2="18"></line>
+            </svg>
+            <svg class="feather feather-x" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <line x1="18" x2="6" y1="6" y2="18"></line>
+                <line x1="6" x2="18" y1="6" y2="18"></line>
+            </svg>
+        </a>
+    </div>
+    <div class="aside-body ps ps--active-y">
+
+        <div class="aside-loggedin">
+
+            <div class="d-flex align-items-center justify-content-start">
+                <a class="avatar" href="{% url 'Dashboard' %}">
+                    <img alt="" class="rounded-circle" src="{% static 'images/default-avatar.png' %}"></a>
+                <div class="aside-alert-link">
+
+                    <form action="{% url 'logout' %}" id="logoutForm" method="post">
+                        {% csrf_token %}
+                        <a data-toggle="tooltip"
+                           href="javascript:document.getElementById('logoutForm').submit()" title="Sign out">
+                            <svg class="feather feather-power" fill="none" height="24" stroke="currentColor"
+                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                 width="24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                                <line x1="12" x2="12" y1="2" y2="12"></line>
+                            </svg>
+                        </a>
+                    </form>
+                </div>
+            </div>
+            <div class="aside-loggedin-user">
+
+                <a aria-expanded="false"
+                   class="d-flex align-items-center justify-content-between mg-b-2 collapsed" data-toggle="collapse"
+                   href="#loggedinMenu">
+                    <h6 class="tx-semibold mg-b-0">{{ user }}</h6>
+                    <svg class="feather feather-chevron-down" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                         stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+                <p class="tx-color-03 tx-12 mg-b-0">{{ user }}</p>
+            </div>
+
+            <div class="collapse {% if 'user_profile' in request.path or 'kyc/customer' in request.path %}show{% endif %}" id="loggedinMenu">
+                <ul class="nav nav-aside mg-b-0">
+                    <li class="nav-item {% if 'user_profile' in request.path %}active{% endif %}"><a class="nav-link" href="#">
+                        <svg class="feather feather-user" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                             stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>View Profile</span></a></li>
+
+
+                    <li class="nav-item">
+
+                        <form action="{% url 'logout' %}" id="logoutForm" method="post">
+                            {% csrf_token %}
+                            <a class="nav-link"
+                               href="javascript:document.getElementById('logoutForm').submit()">
+
+                                <svg class="feather feather-log-out" fill="none" height="24" stroke="currentColor"
+                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                     width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" x2="9" y1="12" y2="12"></line>
+                                </svg>
+                                <span> Log off</span>
+                            </a>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <ul class="nav nav-aside">
+            <li class="nav-label">Accounts</li>
+
+
+            <li class="nav-item {% if 'Dashboard' in request.path %}active{% endif %}">
+                <a class="nav-link" href="{% url 'Dashboard' %}">
+
+                    <svg class="feather feather-home" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                         stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span> Dashboard</span>
+                </a>
+            </li>
+
+
+            <li class="nav-label mg-t-25">CFS ZIPP Apps</li>
+            <li class="nav-item"><a class="nav-link" href="#">
+                <svg class="feather feather-mail" fill="none" height="24" stroke="currentColor" stroke-linecap="round"
+                     stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>Support</span></a></li>
+        </ul>
+        <div class="ps__rail-x" style="left: 0px; top: 0px;">
+            <div class="ps__thumb-x" style="left: 0px; width: 0px;" tabindex="0"></div>
+        </div>
+        <div class="ps__rail-y" style="top: 0px; height: 392px; right: 0px;">
+            <div class="ps__thumb-y" style="top: 0px; height: 342px;" tabindex="0"></div>
+        </div>
+    </div>
+</aside>

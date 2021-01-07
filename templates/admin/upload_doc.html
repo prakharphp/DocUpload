@@ -1,0 +1,47 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+{{ form.media }}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'vendor/sweetalert2/sweetalert2.min.css' %}" id="theme-styles">
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/sweetalert2/sweetalert2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/upload_docs.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'upload_doc' %}" enctype="multipart/form-data" id="doc_upload_form">
+        {% csrf_token %}
+        <fieldset class="module" style="border-bottom: 2px solid #eee;">
+            {% csrf_token %}
+            <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="name">Document Name: </label>
+                    <input class="form-control" id="name" name="document_name" type="text" required >
+                  </div>
+              </div>
+              <div class="form-row" style="height:auto;">
+                  <label class="custom-file-label" for="document">Choose files: </label>
+                  <input type="file" class="custom-file-input" id="document" name="doc_file" required>
+                  <div id="document-status"></div>
+              </div>
+              <div class="form-row">
+                  <label class="custom-file-label" for="document">Choose Users: </label>
+                  <select name="assigned_users" id="id_user" multiple="">
+                  {% for user in users %}
+                      <option value="{{user.id}}">{{user.username}}</option>
+                  {% endfor %}
+                  </select>
+              </div>
+            <p>{{help_text}}</p>
+            <input name="doc_type" id="doc_type" value="{{file_type}}" hidden>
+            <div class="form-row wide">
+                <div class="submit-row">
+                    <input type="button" id="upload_doc" value="Upload">
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}
+
